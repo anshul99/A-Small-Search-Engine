@@ -44,8 +44,4 @@ public class MyHashTable
 		Entry entry = new Entry(word,pos);
 		table[key].addRear(entry);
 	}
-	public MyLinkedList<Entry>[] getTable()
-	{
-		return table;
-	}
 }
