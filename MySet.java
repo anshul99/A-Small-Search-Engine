@@ -12,6 +12,10 @@ public class MySet<X>
 		else
 			return true;
 	}
+	public int getSize()
+	{
+		return l.getSize();
+	}
 	public void addElement(X element) throws Exception
 	{
 		if (IsMember(element) == false)

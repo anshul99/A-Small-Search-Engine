@@ -7,7 +7,7 @@ public class PageEntry
 	private PageIndex pind;
 	private String name;
 	private int size;
-	public PageEntry(String PageName)
+	public PageEntry(String PageName) throws Exception
 	{
 		name = PageName;
 		size = 0;
@@ -58,7 +58,7 @@ public class PageEntry
 		}
 		catch (FileNotFoundException e)
 		{
-			System.out.println("File does not exist");
+			throw new Exception();
 		}
 		
 	}
@@ -69,5 +69,9 @@ public class PageEntry
 	public int getSize()
 	{
 		return size;
+	}
+	public String getName()
+	{
+		return name;
 	}
 }
