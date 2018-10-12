@@ -1,34 +1,51 @@
 public class InvertedPageIndex
 {
-	private MyLinkedList<PageEntry> plist = new MyLinkedList<>();
+	private MyLinkedList<PageEntry> plist;
+	private MyHashTable ht;
+	public InvertedPageIndex()
+	{
+		plist = new MyLinkedList<>();
+		ht = new MyHashTable();
+	}
 	public void addPage(PageEntry p)
 	{
 		plist.addRear(p);
+		MyLinkedList<WordEntry> l = p.getPageIndex().getWordEntries();
+		MyLinkedList<WordEntry>.Node n = l.getHead();
+		while (n != null)
+		{
+			ht.addPositionsForWord(n.data());
+			n = n.next();
+		}
 	}
 	public MySet<PageEntry> getPagesWhichContainWord(String str)
 	{
 		MySet<PageEntry> pset = new MySet<>();
-		MyLinkedList<PageEntry>.Node n = plist.getHead();
-		while (n != null)
+		WordEntry we = ht.search(str);
+		if (str.equals("function"))
 		{
-			PageIndex pi = n.data().getPageIndex();
-			WordEntry we = pi.searchByWord(str);
-			if (we != null)
+			MyLinkedList<Position> l = we.getAllPositionsForThisWord();
+			MyLinkedList<Position>.Node n = l.getHead();
+			while (n != null)
 			{
-				MyLinkedList<Position> l = we.getAllPositionsForThisWord();
-				MyLinkedList<Position>.Node n2 = l.getHead();
-				while (n2 != null)
-				{
-					try
-					{
-						pset.addElement(n2.data().getPageEntry());
-					} 
-					catch (Exception e)
-					{}
-					n2 = n2.next();
-				}
+				n = n.next();
 			}
-			n = n.next();
+		}
+		if (we != null)
+		{
+			MyLinkedList<Position> l = we.getAllPositionsForThisWord();
+			
+			MyLinkedList<Position>.Node n = l.getHead();
+			while (n != null)
+			{
+				try
+				{
+					pset.addElement(n.data().getPageEntry());
+				} 
+				catch (Exception e)
+				{}
+				n = n.next();
+			}
 		}
 		return pset;
 	}

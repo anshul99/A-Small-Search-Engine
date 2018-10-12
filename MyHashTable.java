@@ -2,25 +2,7 @@ public class MyHashTable
 {
 	private int tablesize = 100;
 	@SuppressWarnings("unchecked")
-	private MyLinkedList<Entry>[] table = new MyLinkedList[tablesize];
-	class Entry
-	{
-		private String w;
-		private MyLinkedList<Position> l;
-		public Entry(String word, MyLinkedList<Position> list)
-		{
-			w = word;
-			l = list;
-		}
-		public String getStringName()
-		{
-			return w;
-		}
-		public MyLinkedList<Position> getPosList()
-		{
-			return l;
-		}
-	}
+	private MyLinkedList<WordEntry>[] table = new MyLinkedList[tablesize];
 	public MyHashTable()
 	{
 		for(int i=0;i<tablesize;i++)
@@ -36,12 +18,37 @@ public class MyHashTable
 		key = key%tablesize;
 		return key;
 	}
-	public void addPositionsForWords(WordEntry w)
+	public void addPositionsForWord(WordEntry w)
 	{
 		String word = w.getWord();
-		MyLinkedList<Position> pos = w.getAllPositionsForThisWord();
 		int key = getHashIndex(word);
-		Entry entry = new Entry(word,pos);
-		table[key].addRear(entry);
+		MyLinkedList<WordEntry>.Node n = table[key].getHead();
+		while (n != null)
+		{
+			WordEntry we = n.data();
+			if (we.getWord().equals(word))
+			{
+				we.addPositions(w.getAllPositionsForThisWord());
+				return;
+			}
+			n = n.next();
+		}
+		table[key].addRear(w);
+	}
+	public WordEntry search(String str)
+	{
+		int key = getHashIndex(str);
+		MyLinkedList<WordEntry> l = table[key];
+		MyLinkedList<WordEntry>.Node n = l.getHead();
+		while (n != null)
+		{
+			WordEntry we = n.data();
+			if (we.getWord().equals(str))
+			{
+				return we; 
+			}
+			n = n.next();
+		}
+		return null;
 	}
 }

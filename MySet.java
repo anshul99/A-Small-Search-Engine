@@ -7,10 +7,10 @@ public class MySet<X>
 	}
 	public boolean IsMember(X element)
 	{
-		if (l.search(element) == -1)
-			return false;
-		else
+		if (l.find(element))
 			return true;
+		else
+			return false;
 	}
 	public int getSize()
 	{

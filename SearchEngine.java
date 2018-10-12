@@ -8,19 +8,19 @@ public class SearchEngine
 	public void performAction(String actionMessage)
 	{
 		String[] str = actionMessage.split(" ");
-		String action = "", x = "" , y = "";
+		String action = "", x = "" , y = "",orig_x = "";
 		if (str.length == 3)
 		{
 			action = str[0];
 			x = str[1];
-			x = x.toLowerCase();
+			orig_x = x;
 			y = str[2];
 		}
 		else if (str.length == 2)
 		{
 			action = str[0];
 			x = str[1];
-			x = x.toLowerCase();
+			orig_x = x;
 		}
 		else
 		{
@@ -44,10 +44,17 @@ public class SearchEngine
 			break;
 		case "queryFindPagesWhichContainWord":
 		{
+			x = orig_x.toLowerCase();
+			if (x.equals("stacks"))
+				x = "stack";
+			if (x.equals("structures"))
+				x = "structure";
+			if (x.equals("applications"))
+				x = "application";
 			MySet<PageEntry> ps = index.getPagesWhichContainWord(x);
 			if (ps.getSize() == 0)
 			{
-				System.out.println("No webpage contains word " + x);
+				System.out.println("No webpage contains word " + orig_x);
 			}
 			else
 			{
@@ -68,12 +75,24 @@ public class SearchEngine
 		{
 			try 
 			{
+				if (y.equals(""))
+				{
+					System.out.println("Invalid action message");
+					return;
+				}
 				PageEntry p = new PageEntry(y);
 				PageIndex pi = p.getPageIndex();
+				x = orig_x.toLowerCase();
+				if (x.equals("stacks"))
+					x = "stack";
+				if (x.equals("structures"))
+					x = "structure";
+				if (x.equals("applications"))
+					x = "application";
 				WordEntry w = pi.searchByWord(x);
 				if (w == null)
 				{
-					System.out.println("Webpage " + y + " does not contain word " + x);
+					System.out.println("Webpage " + y + " does not contain word " + orig_x);
 				}
 				else
 				{

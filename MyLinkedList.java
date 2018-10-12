@@ -33,18 +33,16 @@ public class MyLinkedList<T>
     {
     	return size;
     }
-    public int search(T obj)
+    public boolean find(T obj)
     {
-        Node n = head;
-        int cnt = 0;
+    	Node n = head;
         while(n != null)
         {
-            if (n.data == obj)
-            	return cnt;
+            if (n.data.equals(obj))
+            	return true;
             n = n.next;
-            cnt ++;
         }
-        return -1;
+        return false;
     }
     public boolean isEmpty()
     {
