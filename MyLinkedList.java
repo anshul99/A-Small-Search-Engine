@@ -33,6 +33,19 @@ public class MyLinkedList<T>
     {
     	return size;
     }
+    public int index(T obj)
+    {
+    	Node n = head;
+    	int ind = 0;
+    	while (n != null)
+    	{
+    		if (n.data.equals(obj))
+    			return ind;
+    		n = n.next;
+    		ind += 1;
+    	}
+    	return -1;
+    }
     public boolean find(T obj)
     {
     	Node n = head;
@@ -92,14 +105,4 @@ public class MyLinkedList<T>
     		}
         }
     }
-    /*public void print()
-    {
-    	Node n = head;
-		while(n != null)
-		{
-			System.out.print(n.data+" ");
-			n = n.next;
-		}
-		System.out.println();
-    }*/
 }

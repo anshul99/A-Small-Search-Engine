@@ -2,6 +2,7 @@ public class WordEntry
 {
 	private String w;
 	private MyLinkedList<Position> l = new MyLinkedList<>();
+	private AVLTree t = new AVLTree();
 	public WordEntry(String word)
 	{
 		w = word;
@@ -13,6 +14,7 @@ public class WordEntry
 	public void addPosition(Position position)
 	{
 		l.addRear(position);
+		t.insert(position);
 	}
 	public void addPositions(MyLinkedList<Position> positions)
 	{
@@ -20,12 +22,17 @@ public class WordEntry
 		while(n != null)
 		{
 			l.addRear(n.data());
+			t.insert(n.data());
 			n = n.next();
 		}
 	}
 	public MyLinkedList<Position> getAllPositionsForThisWord()
 	{
 		return l;
+	}
+	public AVLTree getTree()
+	{
+		return t;
 	}
 	public float getTermFrequency(String word)
 	{
